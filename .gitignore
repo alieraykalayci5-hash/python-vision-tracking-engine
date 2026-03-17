@@ -30,3 +30,9 @@ data/output/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# C++ build
+cpp/build/
+*.dll
+*.so
+*.dylib 

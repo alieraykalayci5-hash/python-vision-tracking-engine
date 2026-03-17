@@ -7,6 +7,7 @@ import config
 from src.detection.yolo_detector import YOLODetector
 from src.io.video_reader import VideoReader
 from src.io.video_writer import VideoWriter
+from src.tracking.assignment import _cpp_solver
 from src.tracking.tracker import MultiObjectTracker
 from src.visualization.draw import draw_tracks
 
@@ -52,7 +53,10 @@ def main() -> None:
             height=height,
         )
 
-    print("[INFO] Improved Multi-object Tracking")
+    backend_name = "C++ Hungarian DLL" if _cpp_solver.available else "Python/Scipy fallback"
+
+    print("[INFO] Final Multi-object Tracking System")
+    print(f"[INFO] Assignment backend: {backend_name}")
     print(f"[INFO] Input video: {config.VIDEO_SOURCE}")
     print(f"[INFO] Output video: {config.OUTPUT_VIDEO_PATH}")
     print("[INFO] Press 'q' to quit.")
@@ -93,6 +97,17 @@ def main() -> None:
                 frame,
                 f"Active Tracks: {len(tracks)}",
                 (20, 80),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.8,
+                (0, 255, 0),
+                2,
+                cv2.LINE_AA,
+            )
+
+            cv2.putText(
+                frame,
+                f"Backend: {'C++' if _cpp_solver.available else 'Python'}",
+                (20, 120),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.8,
                 (0, 255, 0),

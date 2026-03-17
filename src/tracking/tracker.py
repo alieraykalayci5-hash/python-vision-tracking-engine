@@ -24,22 +24,19 @@ class MultiObjectTracker:
             self.max_match_distance,
         )
 
-        # UPDATE MATCHED
         for track_idx, det_idx in matches:
             det = detections[det_idx]
             center = bbox_center(det["bbox"])
             self.tracks[track_idx].update(center)
 
-        # MARK MISSED
         for track_idx in unmatched_tracks:
             self.tracks[track_idx].mark_missed()
 
-        # REMOVE DEAD TRACKS
         self.tracks = [
-            t for t in self.tracks if not t.is_deleted(self.max_missed_frames)
+            track for track in self.tracks
+            if not track.is_deleted(self.max_missed_frames)
         ]
 
-        # CREATE NEW TRACKS (tentative)
         for det_idx in unmatched_detections:
             det = detections[det_idx]
             center = bbox_center(det["bbox"])
@@ -49,11 +46,10 @@ class MultiObjectTracker:
                 initial_position=center,
                 n_init=3,
             )
-
             self.next_track_id += 1
             self.tracks.append(new_track)
 
-        return matches
+        return matches, unmatched_tracks, unmatched_detections
 
     def get_tracks(self):
-        return [t for t in self.tracks if t.is_confirmed()]
+        return [track for track in self.tracks if track.is_confirmed()]
