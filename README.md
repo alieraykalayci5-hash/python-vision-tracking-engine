@@ -44,7 +44,7 @@ Video Input
 
 ## 🧩 Architecture
 
-![Architecture](assets/architecture.png)
+![Architecture](assets/architecture-diagram.png)
 
 ---
 
