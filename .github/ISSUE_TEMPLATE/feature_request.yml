@@ -1,0 +1,16 @@
+name: Feature request
+description: Suggest a useful improvement
+body:
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Use case
+      description: Describe the actual developer need this feature would solve.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed design
+    validations:
+      required: false

@@ -1,38 +1,35 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-
-# Virtual environment
+# Python environments, caches, local files
 .venv/
 venv/
-
-# VS Code
-.vscode/
-
-# Logs
-*.log
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Output artifacts
-data/output/
-
-# Model files
-*.pt
-*.onnx
-*.engine
-
-# Test / cache
+__pycache__/
+*.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 htmlcov/
-
-# C++ build
-cpp/build/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+# Locally downloaded models and large videos (not cleared for redistribution)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.mp4
+*.avi
+*.mov
+*.mkv
+# Output artifacts / native build products
+/data/output/**
+!/data/output/.gitkeep
+/cpp/build/
 *.dll
 *.so
-*.dylib 
+*.dylib
+*.exe
+*.log
