@@ -1,7 +1,7 @@
 # Python 3.10-3.12 recommended. Ultralytics manages the detector runtime.
 numpy>=1.26,<3
 opencv-python>=4.8,<5
-scipy>=1.11,<2
+scipy>=1.18.1,<2
 ultralytics>=8.3,<9
 torch>=2.2,<3
 # Note: PyTorch GPU installations may require platform-specific install instructions.
