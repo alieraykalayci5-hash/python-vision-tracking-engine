@@ -53,7 +53,7 @@ python main.py --input /path/to/video.mp4 --output data/output/result.mp4 --head
 python main.py --help
 ```
 
-Default filtering tracks COCO `class_id=0` (people). To track all detected classes, add `--all-classes` (IDs may swap more often when different classes are close). Webcam cameras can be selected with `--input 0`. `--max-frames 100` runs a short diagnostic.
+Default filtering tracks COCO `class_id=0` (people). To track all detected classes, add `--all-classes`. Track association now rejects matches between different known detector classes; identity switches remain possible between nearby objects of the same class. Webcam cameras can be selected with `--input 0`. `--max-frames 100` runs a short diagnostic.
 
 ### Optional C++ assignment
 
