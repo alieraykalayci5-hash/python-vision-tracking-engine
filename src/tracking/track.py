@@ -3,10 +3,12 @@ from src.tracking.kalman_filter import KalmanFilter
 
 
 class Track:
-    def __init__(self, track_id: int, initial_position, n_init=3, bbox=None):
+    def __init__(self, track_id: int, initial_position, n_init=3, bbox=None, class_id=None):
         if n_init < 1:
             raise ValueError("n_init must be positive")
         self.id = track_id
+        # Preserve the detector class to prevent cross-class identity switches.
+        self.class_id = class_id
         self.kf = KalmanFilter()
         x, y = initial_position
         self.kf.x[0, 0] = x
