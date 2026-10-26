@@ -31,3 +31,14 @@ def test_invalid_tracker_parameters():
     with pytest.raises(ValueError): MultiObjectTracker(max_match_distance=-1)
     with pytest.raises(ValueError): MultiObjectTracker(max_missed_frames=-1)
     with pytest.raises(ValueError): Track(1,(0,0),n_init=0)
+
+
+def test_new_tracks_store_detector_class():
+    tracker = MultiObjectTracker(max_match_distance=40)
+    person = detection(20, 20)
+    bicycle = detection(60, 20)
+    bicycle["class_id"] = 1
+    tracker.update([person, bicycle])
+    assert [(track.id, track.class_id) for track in tracker.tracks] == [
+        (1, 0), (2, 1)
+    ]

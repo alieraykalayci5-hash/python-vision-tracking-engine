@@ -16,10 +16,18 @@ from scipy.optimize import linear_sum_assignment
 from src.tracking.utils import bbox_center, euclidean_distance
 
 
-def build_cost_matrix(tracks, detections):
+def build_cost_matrix(tracks, detections, max_distance=None):
     cost_matrix = np.zeros((len(tracks), len(detections)), dtype=np.float64)
     for i, track in enumerate(tracks):
         for j, detection in enumerate(detections):
+            # Never pair different known detection classes. Missing class IDs
+            # retain the legacy distance-only behavior for compatibility.
+            track_class = getattr(track, "class_id", None)
+            detection_class = detection.get("class_id")
+            if (max_distance is not None and track_class is not None
+                    and detection_class is not None and track_class != detection_class):
+                cost_matrix[i, j] = max_distance + 1.0
+                continue
             cost_matrix[i, j] = euclidean_distance(
                 track.get_position(), bbox_center(detection["bbox"])
             )
@@ -125,7 +133,7 @@ def hungarian_assignment(tracks, detections, max_distance):
         return [], [], list(range(len(detections)))
     if not detections:
         return [], list(range(len(tracks))), []
-    costs = build_cost_matrix(tracks, detections)
+    costs = build_cost_matrix(tracks, detections, max_distance=max_distance)
     if _cpp_solver.available:
         try:
             assigned = _cpp_solver.solve(costs, max_distance)

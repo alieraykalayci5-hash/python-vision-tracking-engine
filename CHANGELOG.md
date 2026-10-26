@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased — prepared locally; not yet published on GitHub
+## Unreleased — proposed v1.1.1
+
+- Gate track association by known detection class to reduce cross-class ID switches in `--all-classes` mode.
+- Add regression tests for crossed classes and missing class metadata.
+
+## v1.1.0 — 2026-10-23
 
 - Added CLI for input/output, headless mode, tracking configuration and short smoke runs.
 - Added Windows one-click launcher and original synthetic test-clip generator.
@@ -10,4 +15,3 @@
 - Added contributor, security, benchmark, and application preparation documentation.
 - Removed unverified claims of FPS, ID stability, and native acceleration speedups.
 
-Existing public repository history has not been altered. This draft changelog is for a proposed next release after review and verification.

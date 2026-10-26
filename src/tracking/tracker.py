@@ -34,6 +34,7 @@ class MultiObjectTracker:
                 initial_position=bbox_center(bbox),
                 n_init=3,
                 bbox=bbox,
+                class_id=detections[det_idx].get("class_id"),
             ))
             self.next_track_id += 1
         return matches, unmatched_tracks, unmatched_detections

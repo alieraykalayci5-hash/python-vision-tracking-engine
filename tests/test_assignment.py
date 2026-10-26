@@ -44,3 +44,24 @@ def test_cpp_vs_scipy_when_compiled():
         b = [(r,c) for r,c in enumerate(native) if c >= 0]
         assert len(a)==len(b)
         assert np.isclose(sum(costs[r,c] for r,c in a),sum(costs[r,c] for r,c in b),atol=1e-7)
+
+
+def test_cross_class_detections_do_not_swap_track_ids():
+    # The distance-only assignment would pick (0, 0) and (1, 1).
+    # Class-aware gating must match the correct class despite the crossing.
+    tracks = [FakeTrack(10, 0), FakeTrack(30, 0)]
+    tracks[0].class_id = 0
+    tracks[1].class_id = 1
+    detections = [detection(12, 0), detection(28, 0)]
+    detections[0]["class_id"] = 1
+    detections[1]["class_id"] = 0
+    assert hungarian_assignment(tracks, detections, 40) == (
+        [(0, 1), (1, 0)], [], []
+    )
+
+
+def test_class_gating_preserves_backward_compatibility():
+    # Track objects without class metadata still use distance-only matching.
+    tracks = [FakeTrack(10, 0)]
+    dets = [detection(11, 0)]
+    assert hungarian_assignment(tracks, dets, 40) == ([(0, 0)], [], [])
