@@ -77,6 +77,18 @@ python -m pytest -q
 
 The basic tests do **not** download YOLO weights. They cover assignment, track lifecycle, CLI validation and an end-to-end frame I/O smoke test with a **fake detector**. They are not proof of actual YOLO accuracy. CI also compiles the Linux C++ backend and checks matching parity.
 
+## Reproducible assignment benchmark
+
+To measure only the assignment solvers (SciPy and optional compiled C++), run:
+
+```bash
+python -m tools.benchmark_assignment --sizes 10 30 60 --iterations 30 --warmups 5 --seed 2026 --json-output data/output/assignment_benchmark.json
+```
+
+The tool generates the same synthetic cost matrices for both backends, prints median and p95 solver latency in milliseconds, and checks that matching count and total matching cost agree. It records versions and platform details. If native C++ is unavailable, its results are shown as `null` rather than invented.
+
+**This microbenchmark does not measure YOLO inference speed, end-to-end video FPS, or object tracking accuracy.** See [benchmark methodology](docs/BENCHMARKS.md).
+
 ## Repository layout
 
 - `src/detection/`: YOLO wrapper
