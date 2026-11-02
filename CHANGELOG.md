@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased — proposed v1.1.1
+## Unreleased — proposed v1.1.2
+
+- Add deterministic, repeatable SciPy/C++ assignment timing microbenchmark with JSON output and solver parity checks.
+- Add automated tests for benchmark generation, unavailable-native behavior and native result mismatches.
+- Document benchmark limitations and methodology; record no unverified speedup claims.
+
+## v1.1.1 — 2026-10-26
 
 - Gate track association by known detection class to reduce cross-class ID switches in `--all-classes` mode.
 - Add regression tests for crossed classes and missing class metadata.
